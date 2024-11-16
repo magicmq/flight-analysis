@@ -10,7 +10,7 @@ MYSQL_PORT = os.getenv('MYSQL_PORT')
 MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 
-SCREENSHOT_URL='https://magicmq.dev/flight-analysis/pass-list-screenshots/{hash}.png'
+SCREENSHOT_URL='/pass-list-screenshots/{hash}.png'
 
 COLUMN_LABELS = {
     'general': {
