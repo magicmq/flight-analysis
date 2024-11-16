@@ -62,7 +62,7 @@ def init_callbacks(app):
         Output('selected-flight', 'children'),
         Input({'graph-group': ALL}, 'hoverData'),
         Input('graph-type-selector', 'value'),
-        prevent_initial_call=True,
+        prevent_initial_call=True
     )
     def display_selected_flight(hover_data, graph_type):
         if graph_type == 'bar_means':
@@ -95,7 +95,8 @@ def init_callbacks(app):
         Output('download-data', 'data'),
         Input('download-csv', 'n_clicks'),
         Input('download-excel', 'n_clicks'),
-        Input('download-json', 'n_clicks')
+        Input('download-json', 'n_clicks'),
+        prevent_initial_call=True
     )
     def download_data(n_clicks_csv, n_clicks_excel, n_clicks_json):
         triggered_id = callback_context.triggered_id

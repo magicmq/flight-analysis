@@ -2,11 +2,13 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+HOST = os.getenv('HOST')
+PORT = int(os.getenv('PORT'))
+DEBUG = bool(os.getenv('DEBUG'))
 MYSQL_IP = os.getenv('MYSQL_IP')
 MYSQL_PORT = os.getenv('MYSQL_PORT')
 MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
-DEBUG = bool(os.getenv('DEBUG'))
 
 SCREENSHOT_URL='https://magicmq.dev/flight-analysis/pass-list-screenshots/{hash}.png'
 
