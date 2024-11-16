@@ -80,7 +80,7 @@ def init_callbacks(app):
                     return no_update
 
                 header_text = customdata[0]
-                x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point['x']}'
+                x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point["x"]}'
                 screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
 
                 return dmc.Card([
