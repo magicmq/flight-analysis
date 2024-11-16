@@ -1,17 +1,13 @@
 from sqlalchemy import create_engine, MetaData, Table
 import pandas as pd
 import calendar
-import os
 
 from flask_caching import Cache
 
-from dotenv import load_dotenv
-
-load_dotenv()
-MYSQL_IP = os.getenv('MYSQL_IP')
-MYSQL_PORT = os.getenv('MYSQL_PORT')
-MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
-MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+from constants import MYSQL_IP
+from constants import MYSQL_PORT
+from constants import MYSQL_USERNAME
+from constants import MYSQL_PASSWORD
 
 cache = None
 
