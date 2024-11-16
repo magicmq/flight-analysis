@@ -1,3 +1,5 @@
+SCREENSHOT_URL='https://magicmq.dev/flight-analysis/pass-list-screenshots/{hash}.png'
+
 COLUMN_LABELS = {
     'general': {
         'id': 'ID',
@@ -123,6 +125,14 @@ COLUMN_LABELS = {
         'p_sy_to_pp': 'Premium Plus Total Not Cleared'
     }
 }
+
+TOTAL_COLUMNS = [{'label': value, 'value': key} for key, value in COLUMN_LABELS['total'].items()]
+POLARIS_COLUMNS = [{'label': value, 'value': key} for key, value in COLUMN_LABELS['polaris'].items()]
+PP_COLUMNS = [{'label': value, 'value': key} for key, value in COLUMN_LABELS['premium_plus'].items()]
+ECONOMY_COLUMNS = [{'label': value, 'value': key} for key, value in COLUMN_LABELS['economy'].items()]
+STANDBY_COLUMNS = [{'label': value, 'value': key} for key, value in COLUMN_LABELS['standby'].items()]
+
+ALL_COLUMNS = TOTAL_COLUMNS + POLARIS_COLUMNS + PP_COLUMNS + ECONOMY_COLUMNS + STANDBY_COLUMNS
 
 FLAT_COLUMN_LABELS = {key: value for category in COLUMN_LABELS.values() for key, value in category.items()}
 
