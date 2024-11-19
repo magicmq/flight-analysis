@@ -1,4 +1,5 @@
 from components.appshell import construct_appshell
+from components.flightmodal import construct_flight_modal
 
 import dash_mantine_components as dmc
 from dash import dcc, html
@@ -30,6 +31,7 @@ def get_layout():
         children=[
             construct_appshell(),
             dmc.NotificationProvider(position='bottom-left'),
+            construct_flight_modal(),
             html.Div(id='notifications-container'),
             dcc.Download(id='download-data'),
             dcc.Store(id='group-by-state')

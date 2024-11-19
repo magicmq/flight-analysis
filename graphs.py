@@ -108,6 +108,7 @@ def get_graph(data, group_by, graph_type, x_axis, y_axes):
         fig = go.Figure()
 
     fig['layout']['uirevision'] = True
+    fig['layout']['autosize'] = True
 
     return fig
 

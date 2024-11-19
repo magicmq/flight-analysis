@@ -4,12 +4,12 @@ from dash_iconify import DashIconify
 
 from constants import ALL_COLUMNS
 
-def construct_graph_settings():
+def construct_graph_settings(loc):
     return dmc.Stack([
         dmc.Flex(
             [
                 dmc.Select(
-                    id='graph-type-selector',
+                    id={'location': loc, 'selector': 'graph-type-selector'},
                     label='Graph Type',
                     data=[
                         {'label': 'Time Series', 'value': 'time_series'},
@@ -20,9 +20,9 @@ def construct_graph_settings():
                     value='time_series',
                     w=200
                 ),
-                dmc.HoverCard(
+                dmc.Popover(
                     [
-                        dmc.HoverCardTarget(
+                        dmc.PopoverTarget(
                             dmc.ActionIcon(
                                 DashIconify(icon='material-symbols:info-outline', width=20),
                                 size='lg',
@@ -31,7 +31,7 @@ def construct_graph_settings():
                                 mt=25
                             )
                         ),
-                        dmc.HoverCardDropdown(
+                        dmc.PopoverDropdown(
                             dmc.Stack([
                                 dmc.Divider(label=[dmc.Title('Graph Type', size='lg', order=4, c='black')], labelPosition='left', color='black'),
                                 dmc.Text([dmc.Text('Time Series: ', fw=700, span=True), 'A scatter plot with time (date) on the x-axis, and lines connecting each point.']),
@@ -44,17 +44,19 @@ def construct_graph_settings():
                     width=400,
                     position='bottom',
                     withArrow=True,
+                    trapFocus=False,
                     shadow='md',
                     closeOnClickOutside=True
                 ),
             ],
+            gap='xs',
             align='center',
-            justify='space-between'
+            justify='flex-start'
         ),
         dmc.Flex(
             [
                 dmc.Select(
-                    id='x-axis-selector',
+                    id={'location': loc, 'selector': 'x-axis-selector'},
                     label='X-Axis Variable',
                     data=[
                         {'label': 'Date', 'value': 'date'},
@@ -64,9 +66,9 @@ def construct_graph_settings():
                     value='date',
                     w=200
                 ),
-                dmc.HoverCard(
+                dmc.Popover(
                     [
-                        dmc.HoverCardTarget(
+                        dmc.PopoverTarget(
                             dmc.ActionIcon(
                                 DashIconify(icon='material-symbols:info-outline', width=20),
                                 size='lg',
@@ -75,7 +77,7 @@ def construct_graph_settings():
                                 mt=25
                             )
                         ),
-                        dmc.HoverCardDropdown(
+                        dmc.PopoverDropdown(
                             dmc.Stack([
                                 dmc.Divider(label=[dmc.Title('X-Axis Variable', size='lg', order=4, c='black')], labelPosition='left', color='black'),
                                 dmc.Text([dmc.Text('Date: ', fw=700, span=True), 'Arrange the data on the x-axis according to the date of the flight.']),
@@ -87,25 +89,26 @@ def construct_graph_settings():
                     width=400,
                     position='bottom',
                     withArrow=True,
+                    trapFocus=False,
                     shadow='md',
                     closeOnClickOutside=True
                 ),
             ],
+            gap='xs',
             align='center',
-            justify='space-between'
+            justify='flex-start'
         ),
         dmc.Flex(
             [
                 dmc.MultiSelect(
-                    id='y-axis-selector',
+                    id={'location': loc, 'selector': 'y-axis-selector'},
                     label='Y-Axis Variables',
                     data=ALL_COLUMNS,
-                    value=['av_to', 'pos_pe'],
-                    w=425
+                    value=['av_to', 'pos_pe']
                 ),
-                dmc.HoverCard(
+                dmc.Popover(
                     [
-                        dmc.HoverCardTarget(
+                        dmc.PopoverTarget(
                             dmc.ActionIcon(
                                 DashIconify(icon='material-symbols:info-outline', width=20),
                                 size='lg',
@@ -114,7 +117,7 @@ def construct_graph_settings():
                                 mt=25
                             )
                         ),
-                        dmc.HoverCardDropdown(
+                        dmc.PopoverDropdown(
                             dmc.Stack([
                                 dmc.Divider(label=[dmc.Title('Y-Axis Variables', size='lg', order=4, c='black')], labelPosition='left', color='black'),
                                 dmc.Text('Variables to be represented on the y-axis. May select multiple variables in order to show multiple traces/series on the same graph.')
@@ -123,20 +126,24 @@ def construct_graph_settings():
                     width=400,
                     position='bottom',
                     withArrow=True,
-                    shadow='md'
+                    trapFocus=False,
+                    shadow='md',
+                    closeOnClickOutside=True
                 ),
             ],
+            gap='xs',
             align='center',
-            justify='space-between'
+            justify='flex-start',
+            wrap='nowrap'
         ),
     ], mx=10)
 
-def construct_navbar():
-    return dmc.AppShellNavbar([
+def construct_navbar_content(loc):
+    to_return = [
         dmc.Divider(label=[dmc.Text('Data Grouping', size='xl', c='black')], labelPosition='left', color='black'),
 
         dmc.SegmentedControl(
-            id='group-by-selector',
+            id={'location': loc, 'selector': 'group-by-selector'},
             data=[
                 {'label': 'Route/Flight Number', 'value': 'route'},
                 {'label': 'Day of Week', 'value': 'day_of_week_name'}
@@ -148,11 +155,22 @@ def construct_navbar():
 
         dmc.Divider(label=[dmc.Text('Graph Settings', size='xl', c='black')], labelPosition='left', color='black'),
 
-        construct_graph_settings(),
+        construct_graph_settings(loc)
+    ]
 
-        dmc.Divider(label=[dmc.Text('Selected Flight', size='xl', c='black')], labelPosition='left', color='black'),
+    if loc == 'navbar':
+        to_return.append(dmc.Divider(label=[dmc.Text('Selected Flight', size='xl', c='black')], labelPosition='left', color='black')),
+        to_return.append(dmc.Card(id='selected-flight-navbar-card', withBorder=True, visibleFrom='lg'))
 
-        html.Div(id='selected-flight'),
+    return to_return
 
-        dmc.Divider(my=5)
-    ], p=10)
+def construct_navbar():
+    return dmc.AppShellNavbar(construct_navbar_content('navbar'), p=10)
+
+def construct_navbar_drawer():
+    return dmc.Drawer(
+        construct_navbar_content('drawer'),
+        id='navbar-drawer',
+        size=350,
+        trapFocus=False
+    )
