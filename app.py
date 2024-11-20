@@ -22,7 +22,7 @@ callbacks.init_callbacks(app)
 
 if __name__ == '__main__':
     app.run_server(
-        debug=True if DEBUG == 'True' else False,
+        debug=DEBUG,
         host=HOST,
         port=PORT
     )
