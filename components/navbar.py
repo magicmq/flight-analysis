@@ -1,7 +1,7 @@
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from constants import ALL_COLUMNS
+from constants import TOTAL_COLUMNS, POLARIS_COLUMNS, PP_COLUMNS, ECONOMY_COLUMNS, STANDBY_COLUMNS
 
 def construct_graph_settings(loc):
     return dmc.Stack([
@@ -102,7 +102,28 @@ def construct_graph_settings(loc):
                 dmc.MultiSelect(
                     id={'location': loc, 'selector': 'y-axis-selector'},
                     label='Y-Axis Variables',
-                    data=ALL_COLUMNS,
+                    data=[
+                        {
+                            "group": "Totals",
+                            "items": TOTAL_COLUMNS
+                        },
+                        {
+                            "group": 'Polaris',
+                            "items": POLARIS_COLUMNS
+                        },
+                        {
+                            "group": "Premium Plus",
+                            "items": PP_COLUMNS
+                        },
+                        {
+                            "group": "Economy",
+                            "items": ECONOMY_COLUMNS
+                        },
+                        {
+                            "group": 'Standby',
+                            "items": STANDBY_COLUMNS
+                        }
+                    ],
                     value=['av_to', 'pos_pe']
                 ),
                 dmc.Popover(
