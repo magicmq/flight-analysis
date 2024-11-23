@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 
 from data import get_data, get_data_as
 from graphs import get_graphs
-from components.misc import construct_error, construct_no_flight_hover, construct_no_flight_click, construct_graph_container
+from components.misc import construct_error, construct_graph_container
 
 from constants import COMPATIBLE_VARIABLES
 from constants import FLAT_COLUMN_LABELS
@@ -65,7 +65,9 @@ def init_callbacks(app):
         return get_graphs(group_by, graph_type, x_axis, y_axes)
     
     @app.callback(
-        Output('selected-flight-navbar-card', 'children'),
+        Output('selected-flight-navbar-title', 'children'),
+        Output('selected-flight-navbar-text', 'children'),
+        Output('selected-flight-navbar-img', 'children'),
         Output({'graph-group': ALL}, 'hoverData'),
         Input({'graph-group': ALL}, 'hoverData'),
         Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
@@ -77,10 +79,12 @@ def init_callbacks(app):
         graph_type = graph_type_all[index]
 
         if graph_type == 'bar_means':
-            return [
-                dmc.Title(f'Disabled', order=4),
-                dmc.Text(f'Cannot view standby listings when showing mean values.')
-            ], [None for _ in range(len(hover_data))]
+            return (
+                'Disabled',
+                'Cannot view standby listings when showing mean values.',
+                None,
+                [None for _ in range(len(hover_data))]
+            )
 
         for points in hover_data:
             if points is not None:
@@ -88,24 +92,37 @@ def init_callbacks(app):
                 try:
                     customdata = point['customdata']
                 except KeyError:
-                    return no_update
+                    return (
+                        no_update,
+                        no_update,
+                        no_update,
+                        no_update
+                    )
 
                 header_text = customdata[0]
                 x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point["x"]}'
                 screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
 
-                return [
-                    dmc.Title(f'{header_text}', order=4),
-                    dmc.Text(f'{x_axis}'),
-                    dmc.Image(src=screenshot_url, alt='Standby list not found')
-                ], [None for _ in range(len(hover_data))]
+                return (
+                    header_text,
+                    x_axis,
+                    dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
+                    [None for _ in range(len(hover_data))]
+                )
 
-        return construct_no_flight_hover(), [None for _ in range(len(hover_data))]
+        return (
+            'No flight selected.',
+            'Hover over a data point to view the standby list for that flight.',
+            None,
+            [None for _ in range(len(hover_data))]
+        )
     
     @app.callback(
         Output('selected-flight-modal', 'title'),
-        Output('selected-flight-modal-content', 'children'),
+        Output('selected-flight-modal-text', 'children'),
+        Output('selected-flight-modal-img', 'children'),
         Output('selected-flight-modal-external', 'href'),
+        Output('selected-flight-modal-external', 'style'),
         Output({'graph-group': ALL}, 'clickData'),
         Input({'graph-group': ALL}, 'clickData'),
         Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
@@ -117,9 +134,14 @@ def init_callbacks(app):
         graph_type = graph_type_all[index]
 
         if graph_type == 'bar_means':
-            return dmc.Title('Disabled', order=4), [
-                dmc.Text('Cannot view standby listings when showing mean values.')
-            ], '/', [None for _ in range(len(clicked_data))]
+            return (
+                dmc.Title('Disabled', order=4),
+                'Cannot view standby listings when showing mean values.',
+                None,
+                '/',
+                {'display': 'none'},
+                [None for _ in range(len(clicked_data))]
+            )
 
         for points in clicked_data:
             if points is not None:
@@ -127,18 +149,36 @@ def init_callbacks(app):
                 try:
                     customdata = point['customdata']
                 except KeyError:
-                    return no_update
+                    return (
+                        no_update,
+                        no_update,
+                        no_update,
+                        no_update,
+                        no_update,
+                        no_update
+                    )
 
                 header_text = customdata[0]
                 x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point["x"]}'
                 screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
 
-                return dmc.Title(header_text, order=4), [
-                    dmc.Text(f'{x_axis}'),
-                    dmc.Image(src=screenshot_url, alt='Standby list not found')
-                ], screenshot_url, [None for _ in range(len(clicked_data))]
+                return (
+                    dmc.Title(header_text, order=4),
+                    x_axis,
+                    dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
+                    screenshot_url,
+                    {'display': 'block'},
+                    [None for _ in range(len(clicked_data))]
+                )
 
-        return dmc.Title('No flight selected.', order=4), construct_no_flight_click(), '/', [None for _ in range(len(clicked_data))]
+        return (
+            dmc.Title('No flight selected.', order=4),
+            'Hover over a data point to view the standby list for that flight.',
+            None,
+            '/',
+            {'display': 'none'},
+            [None for _ in range(len(clicked_data))]
+        )
 
     @app.callback(
         Output('download-data', 'data'),

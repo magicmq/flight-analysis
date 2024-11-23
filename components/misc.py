@@ -13,17 +13,6 @@ def construct_error(id, title, message):
         autoClose=10000
     )
 
-def construct_no_flight_hover():
-    return [
-        dmc.Title('No flight selected.', order=4),
-        dmc.Text('Hover over a data point to view the standby list for that flight.')
-    ]
-
-def construct_no_flight_click():
-    return [
-        dmc.Text('Click on a data point to view the standby list for that flight.')
-    ]
-
 def construct_graph_container(id):
     return dmc.ScrollArea(
         [

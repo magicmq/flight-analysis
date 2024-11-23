@@ -17,7 +17,12 @@ def construct_flight_modal():
         dmc.Modal(
             dmc.Stack(
                 [
-                    dmc.Box(id='selected-flight-modal-content'),
+                    dmc.Box(
+                        [
+                            dmc.Text(id='selected-flight-modal-text'),
+                            dmc.Box(id='selected-flight-modal-img')
+                        ],
+                    ),
                     dmc.Group(
                         [
                             html.A(
