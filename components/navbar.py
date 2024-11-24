@@ -1,6 +1,8 @@
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
+from components.flightcard import construct_flight_card
+
 from constants import TOTAL_COLUMNS, POLARIS_COLUMNS, PP_COLUMNS, ECONOMY_COLUMNS, STANDBY_COLUMNS
 
 def construct_graph_settings(loc):
@@ -180,15 +182,7 @@ def construct_navbar_content(loc):
 
     if loc == 'navbar':
         to_return.append(dmc.Divider(label=[dmc.Text('Selected Flight', size='xl', c='black')], labelPosition='left', color='black')),
-        to_return.append(dmc.Card(
-            [
-                dmc.Title(id='selected-flight-navbar-title', order=4),
-                dmc.Text(id='selected-flight-navbar-text'),
-                dmc.Box(id='selected-flight-navbar-img')
-            ],
-            withBorder=True,
-            visibleFrom='lg'
-        ))
+        to_return.append(construct_flight_card())
 
     return to_return
 

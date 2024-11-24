@@ -68,6 +68,8 @@ def init_callbacks(app):
         Output('selected-flight-navbar-title', 'children'),
         Output('selected-flight-navbar-text', 'children'),
         Output('selected-flight-navbar-img', 'children'),
+        Output('selected-flight-navbar-external', 'href'),
+        Output('selected-flight-navbar-external', 'style'),
         Output({'graph-group': ALL}, 'hoverData'),
         Input({'graph-group': ALL}, 'hoverData'),
         Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
@@ -83,6 +85,8 @@ def init_callbacks(app):
                 'Disabled',
                 'Cannot view standby listings when showing mean values.',
                 None,
+                '/',
+                {'display': 'none'},
                 [None for _ in range(len(hover_data))]
             )
 
@@ -96,17 +100,22 @@ def init_callbacks(app):
                         no_update,
                         no_update,
                         no_update,
+                        no_update,
+                        no_update,
                         no_update
                     )
 
                 header_text = customdata[0]
-                x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point["x"]}'
+                x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
+                x_axis_value = point["x"]
                 screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
 
                 return (
                     header_text,
-                    x_axis,
+                    [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
                     dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
+                    screenshot_url,
+                    {'display': 'block'},
                     [None for _ in range(len(hover_data))]
                 )
 
@@ -114,6 +123,8 @@ def init_callbacks(app):
             'No flight selected.',
             'Hover over a data point to view the standby list for that flight.',
             None,
+            '/',
+            {'display': 'none'},
             [None for _ in range(len(hover_data))]
         )
     
@@ -159,12 +170,13 @@ def init_callbacks(app):
                     )
 
                 header_text = customdata[0]
-                x_axis = f'{FLAT_COLUMN_LABELS[customdata[2]]}: {point["x"]}'
+                x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
+                x_axis_value = point["x"]
                 screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
 
                 return (
                     dmc.Title(header_text, order=4),
-                    x_axis,
+                    [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
                     dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
                     screenshot_url,
                     {'display': 'block'},
