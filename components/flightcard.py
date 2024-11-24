@@ -19,7 +19,8 @@ def construct_flight_card():
                     target='_blank',
                     style={'display': 'none'}
                 ),
-                justify='flex-end'
+                justify='flex-end',
+                mt=10
             )
         ],
         withBorder=True,
