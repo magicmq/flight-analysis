@@ -106,15 +106,16 @@ def init_callbacks(app):
                     )
 
                 header_text = customdata[0]
+                flight_hash = customdata[1]
                 x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
                 x_axis_value = point["x"]
-                screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
+                screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
 
                 return (
                     header_text,
                     [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
                     dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
-                    screenshot_url,
+                    f'/flight/{flight_hash}',
                     {'display': 'block'},
                     [None for _ in range(len(hover_data))]
                 )
@@ -170,15 +171,16 @@ def init_callbacks(app):
                     )
 
                 header_text = customdata[0]
+                flight_hash = customdata[1]
                 x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
                 x_axis_value = point["x"]
-                screenshot_url = SCREENSHOT_URL.format(hash=customdata[1])
+                screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
 
                 return (
                     dmc.Title(header_text, order=4),
                     [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
                     dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
-                    screenshot_url,
+                    f'/flight/{flight_hash}',
                     {'display': 'block'},
                     [None for _ in range(len(clicked_data))]
                 )

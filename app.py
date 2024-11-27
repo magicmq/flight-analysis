@@ -1,7 +1,7 @@
+import dash
 from dash import Dash, _dash_renderer
 import dash_mantine_components as dmc
 
-from layout import get_layout
 import callbacks
 from data import init_cache
 
@@ -11,7 +11,7 @@ from constants import DEBUG
 
 _dash_renderer._set_react_version('18.2.0')
 
-app = Dash(__name__, external_stylesheets=dmc.styles.ALL, suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=dmc.styles.ALL, use_pages=True, suppress_callback_exceptions=True)
 server = app.server
 
 app.index_string = """
@@ -19,7 +19,6 @@ app.index_string = """
 <html>
     <head>
         {%metas%}
-        <title>Flight Data Analysis</title>
         {%favicon%}
         {%css%}
         <link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96" />
@@ -40,7 +39,31 @@ app.index_string = """
 </html>
 """
 
-app.layout = get_layout()
+app.layout = dmc.MantineProvider(
+    forceColorScheme="light",
+    theme={
+        "primaryColor": "indigo",
+        "fontFamily": "Roboto, sans-serif",
+        "components": {
+            "Button": {"defaultProps": {"fw": 400}},
+            "Alert": {"styles": {"title": {"fontWeight": 500}}},
+            "AvatarGroup": {"styles": {"truncated": {"fontWeight": 500}}},
+            "Badge": {"styles": {"root": {"fontWeight": 500}}},
+            "Progress": {"styles": {"label": {"fontWeight": 500}}},
+            "RingProgress": {"styles": {"label": {"fontWeight": 500}}},
+            "CodeHighlightTabs": {"styles": {"file": {"padding": 12}}},
+            "Table": {
+                "defaultProps": {
+                    "highlightOnHover": True,
+                    "withTableBorder": True,
+                    "verticalSpacing": "sm",
+                    "horizontalSpacing": "md",
+                }
+            },
+        },
+    },
+    children=[dash.page_container]
+)
 
 init_cache(app)
 

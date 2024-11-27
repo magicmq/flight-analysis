@@ -72,15 +72,25 @@ def transform_data(data):
         _data['p_av_pp'] = _data['p_ca_pp'] - _data['p_bo_pp'] - _data['p_ps_pp'] - _data['p_he_pp'] - _data['p_re_pp']
         _data['p_av_to'] = _data['p_ca_to'] - _data['p_bo_to'] - _data['p_ps_to'] - _data['p_he_to'] - _data['p_re_to']
 
+        _data['p_cl_to_to'] = _data['p_cl_to_bu'] + _data['p_cl_to_co'] + _data['p_cl_to_pp']
+        _data['p_sy_to_to'] = _data['p_sy_to_bu'] + _data['p_sy_to_co'] + _data['p_sy_to_pp']
+        _data['p_cl_ug_to'] = _data['p_cl_ug_bu'] + _data['p_cl_ug_co'] + _data['p_cl_ug_pp']
+        _data['p_sy_ug_to'] = _data['p_sy_ug_bu'] + _data['p_sy_ug_co'] + _data['p_sy_ug_pp']
+        _data['p_cl_sa_to'] = _data['p_cl_sa_bu'] + _data['p_cl_sa_co'] + _data['p_cl_sa_pp']
+        _data['p_sy_sa_to'] = _data['p_sy_sa_bu'] + _data['p_sy_sa_co'] + _data['p_sy_sa_pp']
+
         _data['net_pos_va'] = _data['av_to'] - _data['pos_va']
         _data['net_pos_pe'] = _data['av_to'] - _data['pos_pe']
 
     return _transform_data(data)
 
-def get_data():
+def get_data(hash=None):
     data = fetch_data()
     transform_data(data)
-    return data
+    if hash:
+        return data[data['hash'] == hash]
+    else:
+        return data
 
 def get_data_as(type):
     if type == 'csv':
