@@ -3,7 +3,7 @@ from dash_iconify import DashIconify
 from dash import html
 
 def construct_flight_card():
-    return dmc.Card(
+    return dmc.Card(dmc.ScrollArea(
         [
             dmc.Title(id='selected-flight-navbar-title', order=4),
             dmc.Text(id='selected-flight-navbar-text'),
@@ -23,6 +23,6 @@ def construct_flight_card():
                 mt=10
             )
         ],
-        withBorder=True,
-        visibleFrom='lg'
-    )
+        type='scroll',
+        offsetScrollbars=True
+    ), withBorder=True, visibleFrom='lg')
