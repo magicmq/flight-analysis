@@ -187,7 +187,15 @@ def construct_navbar_content(loc):
     return to_return
 
 def construct_navbar():
-    return dmc.AppShellNavbar(construct_navbar_content('navbar'), p=10)
+    return dmc.AppShellNavbar(
+        dmc.ScrollArea(
+            construct_navbar_content('navbar'),
+            offsetScrollbars=True,
+            type='scroll',
+            style={"height": "100%"}
+        ),
+        p=10
+    )
 
 def construct_navbar_drawer():
     return dmc.Drawer(
