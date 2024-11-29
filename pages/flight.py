@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 from datetime import datetime
 import pytz
 
-from components.header import construct_header
+from components.flightheader import construct_header
 from data import get_data
 
 from constants import SCREENSHOT_URL, COLUMN_LABELS
@@ -137,6 +137,7 @@ def construct_flight_info(data):
         [
             dmc.Card(
                 [
+                    dmc.Title('Overview', order=4, mb=10),
                     dmc.Text([dmc.Text('Date: ', fw=500, span=True), data.iloc[0]['date'].strftime('%m/%d/%Y')]),
                     dmc.Text([dmc.Text('Day of Week: ', fw=500, span=True), data.iloc[0]['day_of_week_name']]),
                     dmc.Text([dmc.Text('Scheduled Departure Time: ', fw=500, span=True), data.iloc[0]['flight_time']]),

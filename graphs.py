@@ -68,7 +68,7 @@ def construct_bar(data, group_column, x_axis, y_axes):
     return fig
 
 def construct_bar_means(grouped_data, x_axis, y_axes):
-    mean_data = grouped_data.groupby([x_axis], observed=False)[y_axes].mean().reset_index()
+    mean_data = grouped_data.groupby([x_axis], observed=False)[y_axes].mean().round(1).reset_index()
 
     fig = go.Figure()
 
