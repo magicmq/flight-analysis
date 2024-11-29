@@ -10,7 +10,7 @@ def construct_header():
                     dmc.Grid(
                         children=[
                             dmc.GridCol(
-                                dmc.Title('Flight Data Analysis', order=1),
+                                dmc.Title('Flight Info', order=1),
                                 span='content'
                             ),
                             dmc.GridCol(

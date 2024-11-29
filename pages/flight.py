@@ -241,7 +241,8 @@ def construct_data(data, section, pre_post, caption):
                 striped=False,
                 highlightOnHover=True,
                 withTableBorder=False,
-                withColumnBorders=False
+                withColumnBorders=False,
+                horizontalSpacing=1
             )
         ],
         withBorder=True
