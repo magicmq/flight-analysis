@@ -140,8 +140,9 @@ def construct_flight_info(data):
                     dmc.Title('Overview', order=4, mb=10),
                     dmc.Text([dmc.Text('Date: ', fw=500, span=True), data.iloc[0]['date'].strftime('%m/%d/%Y')]),
                     dmc.Text([dmc.Text('Day of Week: ', fw=500, span=True), data.iloc[0]['day_of_week_name']]),
-                    dmc.Text([dmc.Text('Scheduled Departure Time: ', fw=500, span=True), data.iloc[0]['flight_time']]),
-                    dmc.Text([dmc.Text('Actual Departure Time: ', fw=500, span=True), data.iloc[0]['actual_flight_time']]),
+                    dmc.Text([dmc.Text('Scheduled Departure Time: ', fw=500, span=True), data.iloc[0]['flight_time'].strftime('%I:%M %p (local time)')]),
+                    dmc.Text([dmc.Text('Actual Departure Time: ', fw=500, span=True), data.iloc[0]['actual_flight_time'].strftime('%I:%M %p (local time)')]),
+                    dmc.Text([dmc.Text('Delay: ', fw=500, span=True), format_minutes_late(data.iloc[0]['minutes_late'])]),
                     dmc.Text([dmc.Text('Data Obtained At: ', fw=500, span=True), format_timestamp(data.iloc[0]['data_timestamp'])]),
                     dmc.Text([dmc.Text('Post-Departure Data Obtained At: ', fw=500, span=True), format_timestamp(data.iloc[0]['p_data_timestamp'])])
                 ],
@@ -247,6 +248,14 @@ def construct_data(data, section, pre_post, caption):
         ],
         withBorder=True
     )
+
+def format_minutes_late(minutes_late):
+    if minutes_late >= 10:
+        hours = int(minutes_late // 60)
+        minutes = int(minutes_late % 60)
+        return f'Flight departed {hours} hours, {minutes} minutes late'
+    else:
+        return 'Flight departed on time'
 
 
 def format_timestamp(timestamp):

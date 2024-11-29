@@ -67,6 +67,12 @@ def transform_data(data):
         _data['day_of_week_name'] = _data['day_of_week'].map({i: day for i, day in enumerate(calendar.day_name)})
         _data['day_of_week_name'] = pd.Categorical(_data['day_of_week_name'], categories=day_order, ordered=True)
 
+        _data['flight_time'] = _data['flight_time'].str.replace('a', 'AM').str.replace('p', 'PM')
+        _data['flight_time'] = pd.to_datetime(_data['flight_time'], format='%I:%M%p')
+        _data['actual_flight_time'] = _data['actual_flight_time'].str.replace('a', 'AM').str.replace('p', 'PM')
+        _data['actual_flight_time'] = pd.to_datetime(_data['actual_flight_time'], format='%I:%M%p')
+        _data['minutes_late'] = ((_data['actual_flight_time'] - _data['flight_time']).dt.total_seconds()) / 60
+
         _data['p_av_bu'] = _data['p_ca_bu'] - _data['p_bo_bu'] - _data['p_ps_bu'] - _data['p_he_bu'] - _data['p_re_bu']
         _data['p_av_co'] = _data['p_ca_co'] - _data['p_bo_co'] - _data['p_ps_co'] - _data['p_he_co'] - _data['p_re_co']
         _data['p_av_pp'] = _data['p_ca_pp'] - _data['p_bo_pp'] - _data['p_ps_pp'] - _data['p_he_pp'] - _data['p_re_pp']
