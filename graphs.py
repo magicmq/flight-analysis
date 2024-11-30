@@ -3,7 +3,7 @@ from plotly import graph_objects as go
 
 from data import get_data
 
-from constants import FLAT_COLUMN_LABELS
+from columns import get_label
 
 def construct_scatter(data, group_column, x_axis, y_axes, mode='markers'):
     fig = go.Figure()
@@ -17,18 +17,18 @@ def construct_scatter(data, group_column, x_axis, y_axes, mode='markers'):
             x=data[x_axis],
             y=data[y_axis],
             mode=mode,
-            name=f'{FLAT_COLUMN_LABELS[y_axis]}',
+            name=f'{get_label(y_axis)}',
             hovertemplate=(
                 '%{customdata[0]}<br>' +
-                f'{FLAT_COLUMN_LABELS[x_axis]}: '  + '%{x}<br>' +
+                f'{get_label(x_axis)}: '  + '%{x}<br>' +
                 'Count: %{y}'
             ),
             customdata=customdata
         ))
 
     fig.update_layout(
-        title=", ".join([FLAT_COLUMN_LABELS[y_axis] for y_axis in y_axes]),
-        xaxis_title=FLAT_COLUMN_LABELS[x_axis],
+        title=", ".join([get_label(y_axis) for y_axis in y_axes]),
+        xaxis_title=get_label(x_axis),
         yaxis_title='Count',
         height=600
     )
@@ -51,7 +51,7 @@ def construct_bar(data, group_column, x_axis, y_axes):
             y=data[y_axis],
             text=data[y_axis],
             textposition='auto',
-            name=f'{FLAT_COLUMN_LABELS[y_axis]}',
+            name=f'{get_label(y_axis)}',
             hovertemplate=(
                 '%{customdata[0]}<br>' +
                 'Count: %{y}'
@@ -60,8 +60,8 @@ def construct_bar(data, group_column, x_axis, y_axes):
         ))
 
     fig.update_layout(
-        title=", ".join([FLAT_COLUMN_LABELS[y_axis] for y_axis in y_axes]),
-        xaxis_title=f'{FLAT_COLUMN_LABELS[x_axis]}',
+        title=", ".join([get_label(y_axis) for y_axis in y_axes]),
+        xaxis_title=f'{get_label(x_axis)}',
         yaxis_title='Count'
     )
 
@@ -78,16 +78,16 @@ def construct_bar_means(grouped_data, x_axis, y_axes):
             y=mean_data[y_axis],
             text=mean_data[y_axis],
             textposition='auto',
-            name=f'Mean of {FLAT_COLUMN_LABELS[y_axis]}',
+            name=f'Mean of {get_label(y_axis)}',
             hovertemplate=(
-                f'{FLAT_COLUMN_LABELS[x_axis]}: ' + '%{x}<br>' +
+                f'{get_label(x_axis)}: ' + '%{x}<br>' +
                 'Mean: %{y}'
             ),
         ))
 
     fig.update_layout(
-        title=", ".join([f'Mean of {FLAT_COLUMN_LABELS[y_axis]}' for y_axis in y_axes]),
-        xaxis_title=f'{FLAT_COLUMN_LABELS[x_axis]}',
+        title=", ".join([f'Mean of {get_label(y_axis)}' for y_axis in y_axes]),
+        xaxis_title=f'{get_label(x_axis)}',
         yaxis_title='Mean'
     )
 

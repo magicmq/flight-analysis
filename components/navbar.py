@@ -3,7 +3,7 @@ from dash_iconify import DashIconify
 
 from components.flightcard import construct_flight_card
 
-from constants import TOTAL_COLUMNS, POLARIS_COLUMNS, PP_COLUMNS, ECONOMY_COLUMNS, STANDBY_COLUMNS
+from columns import get_x_axis_columns, get_y_axis_columns
 
 def construct_graph_settings(loc):
     return dmc.Stack([
@@ -59,11 +59,7 @@ def construct_graph_settings(loc):
                 dmc.Select(
                     id={'location': loc, 'selector': 'x-axis-selector'},
                     label='X-Axis Variable',
-                    data=[
-                        {'label': 'Date', 'value': 'date'},
-                        {'label': 'Flight Number', 'value': 'flight_no'},
-                        {'label': 'Day Of Week', 'value': 'day_of_week_name'}
-                    ],
+                    data=get_x_axis_columns(),
                     value='date',
                     w=200
                 ),
@@ -106,24 +102,28 @@ def construct_graph_settings(loc):
                     label='Y-Axis Variables',
                     data=[
                         {
-                            "group": "Totals",
-                            "items": TOTAL_COLUMNS
+                            'group': 'General',
+                            'items': get_y_axis_columns('general')
+                        },                        
+                        {
+                            'group': 'Totals',
+                            'items': get_y_axis_columns('total')
                         },
                         {
-                            "group": 'Polaris',
-                            "items": POLARIS_COLUMNS
+                            'group': 'Polaris',
+                            'items': get_y_axis_columns('polaris')
                         },
                         {
-                            "group": "Premium Plus",
-                            "items": PP_COLUMNS
+                            'group': 'Premium Plus',
+                            'items': get_y_axis_columns('premium_plus')
                         },
                         {
-                            "group": "Economy",
-                            "items": ECONOMY_COLUMNS
+                            'group': 'Economy',
+                            'items': get_y_axis_columns('economy')
                         },
                         {
-                            "group": 'Standby',
-                            "items": STANDBY_COLUMNS
+                            'group': 'Standby',
+                            'items': get_y_axis_columns('standby')
                         }
                     ],
                     value=['av_to', 'pos_pe']

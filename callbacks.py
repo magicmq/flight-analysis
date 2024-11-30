@@ -5,8 +5,8 @@ from data import get_data, get_data_as
 from graphs import get_graphs
 from components.misc import construct_error, construct_graph_container
 
+from columns import get_label
 from constants import COMPATIBLE_VARIABLES
-from constants import FLAT_COLUMN_LABELS
 from constants import SCREENSHOT_URL
 
 def init_callbacks(app):
@@ -107,7 +107,7 @@ def init_callbacks(app):
 
                 header_text = customdata[0]
                 flight_hash = customdata[1]
-                x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
+                x_axis_label = f'{get_label(customdata[2])}: '
                 x_axis_value = point["x"]
                 screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
 
@@ -172,7 +172,7 @@ def init_callbacks(app):
 
                 header_text = customdata[0]
                 flight_hash = customdata[1]
-                x_axis_label = f'{FLAT_COLUMN_LABELS[customdata[2]]}: '
+                x_axis_label = f'{get_label(customdata[2])}: '
                 x_axis_value = point["x"]
                 screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
 

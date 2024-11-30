@@ -6,7 +6,8 @@ import pytz
 from components.flightheader import construct_header
 from data import get_data
 
-from constants import SCREENSHOT_URL, COLUMN_LABELS
+from columns import get_columns_by_category
+from constants import SCREENSHOT_URL
 
 dash.register_page(__name__, title='Flight', path_template='/flight/<hash>')
 
@@ -228,11 +229,11 @@ def construct_data_tables(data, section, title_1, title_2, caption_1, caption_2)
 
 def construct_data(data, section, pre_post, caption):
     rows = []
-    for key, value in COLUMN_LABELS[section][pre_post].items():
+    for key, value in get_columns_by_category(section, pre_post).items():
         number = data.iloc[0][key]
         rows.append(dmc.TableTr(
             [
-                dmc.TableTd(value),
+                dmc.TableTd(value['label']),
                 dmc.TableTd(number)
             ]
         ))
