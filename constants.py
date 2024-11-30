@@ -132,8 +132,10 @@ COLUMN_LABELS = {
         'personal': {
             'pos_va': 'Position with Vacation Pass (SA3V)',
             'pos_pe': 'Position with Personal Pass (SA4P)',
-            'net_pos_va': 'Total Available Minus Vacation Pass Position',
-            'net_pos_pe': 'Total Available Minus Personal Pass Position'
+            'net_pos_va': 'Total Available Minus SA3V Position',
+            'net_pos_pe': 'Total Available Minus SA4P Position',
+            'p_net_pos_va_bu': 'Polaris Total Cleared Minus SA3V Position',
+            'p_net_pos_pe_bu': 'Polaris Total Cleared Minus SA4P Position'
         },
         'total': {
             'p_cl_to_to': 'Total Cleared',

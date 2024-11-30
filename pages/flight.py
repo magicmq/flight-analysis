@@ -137,14 +137,19 @@ def construct_flight_info(data):
         [
             dmc.Card(
                 [
-                    dmc.Title('Overview', order=4, mb=10),
+                    dmc.Title('Overview', order=4, mb=5),
                     dmc.Text([dmc.Text('Date: ', fw=500, span=True), data.iloc[0]['date'].strftime('%m/%d/%Y')]),
                     dmc.Text([dmc.Text('Day of Week: ', fw=500, span=True), data.iloc[0]['day_of_week_name']]),
                     dmc.Text([dmc.Text('Scheduled Departure Time: ', fw=500, span=True), data.iloc[0]['flight_time'].strftime('%I:%M %p (local time)')]),
                     dmc.Text([dmc.Text('Actual Departure Time: ', fw=500, span=True), data.iloc[0]['actual_flight_time'].strftime('%I:%M %p (local time)')]),
                     dmc.Text([dmc.Text('Delay: ', fw=500, span=True), format_minutes_late(data.iloc[0]['minutes_late'])]),
                     dmc.Text([dmc.Text('Data Obtained At: ', fw=500, span=True), format_timestamp(data.iloc[0]['data_timestamp'])]),
-                    dmc.Text([dmc.Text('Post-Departure Data Obtained At: ', fw=500, span=True), format_timestamp(data.iloc[0]['p_data_timestamp'])])
+                    dmc.Text([dmc.Text('Post-Departure Data Obtained At: ', fw=500, span=True), format_timestamp(data.iloc[0]['p_data_timestamp'])]),
+                    dmc.Title('What Ifs', order=4, mt=10, mb=5),
+                    dmc.Text([dmc.Text('Would a passrider with SA3V priority have gotten on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['net_pos_va'], 0, '>=')]),
+                    dmc.Text([dmc.Text('Would a passrider with SA4P priority have gotten on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['net_pos_pe'], 0, '>=')]),
+                    dmc.Text([dmc.Text('Would a passrider with SA3V priority have gotten a polaris seat on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['p_net_pos_va_bu'], 0, '>=')]),
+                    dmc.Text([dmc.Text('Would a passrider with SA4P priority have gotten a polaris seat on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['p_net_pos_pe_bu'], 0, '>=')])
                 ],
                 withBorder=True
             ),
@@ -263,3 +268,14 @@ def format_timestamp(timestamp):
     central_tz = pytz.timezone('US/Central')
     central_time = pytz.utc.localize(utc_time).astimezone(central_tz)
     return central_time.strftime('%m/%d/%Y %I:%M:%S %p %Z')
+
+def get_what_if(value_1, value_2, operator):
+    operators = {
+        '<': lambda x, y: x < y,
+        '>': lambda x, y: x > y,
+        '==': lambda x, y: x == y,
+        '<=': lambda x, y: x <= y,
+        '>=': lambda x, y: x >= y
+    }
+
+    return 'Yes' if operators[operator](value_1, value_2) else 'No'

@@ -88,6 +88,9 @@ def transform_data(data):
         _data['net_pos_va'] = _data['av_to'] - _data['pos_va']
         _data['net_pos_pe'] = _data['av_to'] - _data['pos_pe']
 
+        _data['p_net_pos_va_bu'] = _data['p_cl_to_bu'] - _data['pos_va']
+        _data['p_net_pos_pe_bu'] = _data['p_cl_to_bu'] - _data['pos_pe']
+
     return _transform_data(data)
 
 def get_data(hash=None):
