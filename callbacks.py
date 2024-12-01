@@ -98,14 +98,7 @@ def init_callbacks(app):
                 try:
                     customdata = point['customdata']
                 except KeyError:
-                    return (
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update
-                    )
+                    return [no_update] * len(callback_context.outputs_list)
 
                 header_text = customdata[0]
                 flight_hash = customdata[1]
@@ -163,14 +156,7 @@ def init_callbacks(app):
                 try:
                     customdata = point['customdata']
                 except KeyError:
-                    return (
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update,
-                        no_update
-                    )
+                    return [no_update] * len(callback_context.outputs_list)
 
                 header_text = customdata[0]
                 flight_hash = customdata[1]

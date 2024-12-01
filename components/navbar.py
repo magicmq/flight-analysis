@@ -126,7 +126,8 @@ def construct_graph_settings(loc):
                             'items': get_y_axis_columns('standby')
                         }
                     ],
-                    value=['av_to', 'pos_pe']
+                    value=['av_to', 'pos_pe'],
+                    miw=200
                 ),
                 dmc.Popover(
                     [

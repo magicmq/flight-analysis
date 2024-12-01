@@ -11,7 +11,7 @@ from constants import DEBUG
 
 _dash_renderer._set_react_version('18.2.0')
 
-app = Dash(__name__, external_stylesheets=dmc.styles.ALL, use_pages=True, suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=dmc.styles.ALL, use_pages=True, update_title=None, suppress_callback_exceptions=True)
 server = app.server
 
 app.index_string = """
