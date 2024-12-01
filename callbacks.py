@@ -45,13 +45,15 @@ def init_callbacks(app):
         Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
         Input({'location': ALL, 'selector': 'x-axis-selector'}, 'value'),
         Input({'location': ALL, 'selector': 'y-axis-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'color-selector'}, 'value'),
         State('navbar-drawer', 'opened')
     )
-    def update_graphs(group_by, graph_type_all, x_axis_all, y_axes_all, navbar_opened):
+    def update_graphs(group_by, graph_type_all, x_axis_all, y_axes_all, color_all, navbar_opened):
         index = 1 if navbar_opened else 0
         graph_type = graph_type_all[index]
         x_axis = x_axis_all[index]
         y_axes = y_axes_all[index]
+        color = color_all[index]
 
         if not COMPATIBLE_VARIABLES[group_by][graph_type][x_axis]:
             set_props('notifications-container', {'children': construct_error(
@@ -62,7 +64,7 @@ def init_callbacks(app):
 
             return [no_update] * len(callback_context.outputs_list)
 
-        return get_graphs(group_by, graph_type, x_axis, y_axes)
+        return get_graphs(group_by, graph_type, x_axis, y_axes, color)
     
     @app.callback(
         Output('selected-flight-navbar-title', 'children'),

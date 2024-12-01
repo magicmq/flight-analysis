@@ -3,7 +3,7 @@ from dash_iconify import DashIconify
 
 from components.flightcard import construct_flight_card
 
-from columns import get_x_axis_columns, get_y_axis_columns
+from columns import get_x_axis_columns, get_y_axis_columns, get_color_columns
 
 def construct_graph_settings(loc):
     return dmc.Stack([
@@ -158,6 +158,70 @@ def construct_graph_settings(loc):
             justify='flex-start',
             wrap='nowrap'
         ),
+        dmc.Flex(
+            [
+                dmc.Select(
+                    id={'location': loc, 'selector': 'color-selector'},
+                    label='Color',
+                    data=[
+                        {
+                            'group': 'General',
+                            'items': get_color_columns('general')
+                        },                        
+                        {
+                            'group': 'Totals',
+                            'items': get_color_columns('total')
+                        },
+                        {
+                            'group': 'Polaris',
+                            'items': get_color_columns('polaris')
+                        },
+                        {
+                            'group': 'Premium Plus',
+                            'items': get_color_columns('premium_plus')
+                        },
+                        {
+                            'group': 'Economy',
+                            'items': get_color_columns('economy')
+                        },
+                        {
+                            'group': 'Standby',
+                            'items': get_color_columns('standby')
+                        }
+                    ],
+                    value=[],
+                    w=300
+                ),
+                dmc.Popover(
+                    [
+                        dmc.PopoverTarget(
+                            dmc.ActionIcon(
+                                DashIconify(icon='material-symbols:info-outline', width=20),
+                                size='lg',
+                                variant='transparent',
+                                color='gray',
+                                mt=25
+                            )
+                        ),
+                        dmc.PopoverDropdown(
+                            dmc.Stack([
+                                dmc.Divider(label=[dmc.Title('Color', size='lg', order=4, c='black')], labelPosition='left', color='black'),
+                                dmc.Text('(Optional) Applies a color to each data point (or bar) on the graphs according to the selected value.')
+                            ], gap='xs'))
+                    ],
+                    width=400,
+                    position='bottom',
+                    withArrow=True,
+                    trapFocus=False,
+                    shadow='md',
+                    closeOnClickOutside=True
+                ),
+            ],
+            gap='xs',
+            align='center',
+            justify='flex-start',
+            wrap='nowrap'
+        )
     ], mx=10)
 
 def construct_navbar_content(loc):
