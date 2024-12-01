@@ -9,7 +9,11 @@ from data import get_data
 from columns import get_columns_by_category
 from constants import SCREENSHOT_URL
 
-dash.register_page(__name__, title='Flight', path_template='/flight/<hash>')
+def title(hash=None, **kwargs):
+    data = get_data(hash)
+    return f'UAL{data.iloc[0]['flight_no']} On {data.iloc[0]["date"].strftime("%m/%d/%Y")}'
+
+dash.register_page(__name__, title=title, path_template='/flight/<hash>')
 
 def layout(hash=None, **kwargs):
     data = get_data(hash)
@@ -27,7 +31,6 @@ def layout(hash=None, **kwargs):
 def construct_main(data):
     return dmc.AppShellMain(dmc.Box(
         [
-            dmc.Title(f'{data.iloc[0]["route"]} on {data.iloc[0]["date"].strftime("%m/%d/%Y")}', order=2, mb=10),
             dmc.Accordion(
                 [
                     dmc.AccordionItem(

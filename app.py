@@ -19,6 +19,7 @@ app.index_string = """
 <html>
     <head>
         {%metas%}
+        <title>{%title%}</title>
         {%favicon%}
         {%css%}
         <link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96" />
