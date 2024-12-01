@@ -11,7 +11,7 @@ from constants import SCREENSHOT_URL
 
 def title(hash=None, **kwargs):
     data = get_data(hash)
-    return f'UAL{data.iloc[0]['flight_no']} On {data.iloc[0]["date"].strftime("%m/%d/%Y")}'
+    return f'UAL{data.iloc[0]["flight_no"]} On {data.iloc[0]["date"].strftime("%m/%d/%Y")}'
 
 dash.register_page(__name__, title=title, path_template='/flight/<hash>')
 
