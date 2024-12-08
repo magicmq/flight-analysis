@@ -74,8 +74,6 @@ def construct_bar(data, group_column, x_axis, y_axes, color):
     if use_color:
         customdata = np.concatenate([customdata, data[[color]].values], axis=1)
 
-    print(customdata)
-
     for y_axis in y_axes:
         marker = {
             'color': data[color] if use_color else None,
@@ -125,7 +123,6 @@ def construct_bar_means(grouped_data, x_axis, y_axes, color):
         mean_data = grouped_data.groupby([x_axis], observed=False)[y_axes + [color]].mean().round(1).reset_index()
 
         customdata = mean_data[[color]].values
-        print(customdata)
     else:
         mean_data = grouped_data.groupby([x_axis], observed=False)[y_axes].mean().round(1).reset_index()
 
