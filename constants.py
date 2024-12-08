@@ -10,7 +10,8 @@ MYSQL_PORT = os.getenv('MYSQL_PORT')
 MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 
-SCREENSHOT_URL='/pass-list-screenshots/{hash}.png'
+FLIGHT_PAGE_URL = '/flight/{hash}'
+SCREENSHOT_URL = '/pass-list-screenshots/{hash}.png'
 
 COMPATIBLE_VARIABLES = {
     'route': {

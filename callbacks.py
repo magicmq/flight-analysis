@@ -6,8 +6,7 @@ from graphs import get_graphs
 from components.misc import construct_error, construct_graph_container
 
 from columns import get_label
-from constants import COMPATIBLE_VARIABLES
-from constants import SCREENSHOT_URL
+from constants import COMPATIBLE_VARIABLES, FLIGHT_PAGE_URL, SCREENSHOT_URL
 
 def init_callbacks(app):
     @app.callback(
@@ -104,13 +103,14 @@ def init_callbacks(app):
                 flight_hash = customdata[1]
                 x_axis_label = f'{get_label(customdata[2])}: '
                 x_axis_value = point["x"]
+                flight_page_url = FLIGHT_PAGE_URL.format(hash=flight_hash)
                 screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
 
                 return (
                     header_text,
                     [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
                     dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
-                    f'/flight/{flight_hash}',
+                    flight_page_url,
                     {'display': 'block'},
                     [None for _ in range(len(hover_data))]
                 )
@@ -125,30 +125,21 @@ def init_callbacks(app):
         )
     
     @app.callback(
-        Output('selected-flight-modal', 'title'),
-        Output('selected-flight-modal-text', 'children'),
-        Output('selected-flight-modal-img', 'children'),
-        Output('selected-flight-modal-external', 'href'),
-        Output('selected-flight-modal-external', 'style'),
+        Output('new-tab-handler', 'href'),
+        Output('new-tab-handler', 'n_opens'),
         Output({'graph-group': ALL}, 'clickData'),
+        Input('new-tab-handler', 'n_opens'),
         Input({'graph-group': ALL}, 'clickData'),
-        Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
+        State({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
         State('navbar-drawer', 'opened'),
         prevent_initial_call=True
     )
-    def display_clicked_flight(clicked_data, graph_type_all, navbar_opened):
+    def open_clicked_flight(n_opens, clicked_data, graph_type_all, navbar_opened):
         index = 1 if navbar_opened else 0
         graph_type = graph_type_all[index]
 
         if graph_type == 'bar_means':
-            return (
-                dmc.Title('Disabled', order=4),
-                'Cannot view standby listings when showing mean values.',
-                None,
-                '/',
-                {'display': 'none'},
-                [None for _ in range(len(clicked_data))]
-            )
+            return no_update, no_update, [None for _ in clicked_data]
 
         for points in clicked_data:
             if points is not None:
@@ -158,29 +149,16 @@ def init_callbacks(app):
                 except KeyError:
                     return [no_update] * len(callback_context.outputs_list)
 
-                header_text = customdata[0]
                 flight_hash = customdata[1]
-                x_axis_label = f'{get_label(customdata[2])}: '
-                x_axis_value = point["x"]
-                screenshot_url = SCREENSHOT_URL.format(hash=flight_hash)
+                flight_page_url = FLIGHT_PAGE_URL.format(hash=flight_hash)
 
                 return (
-                    dmc.Title(header_text, order=4),
-                    [dmc.Text(x_axis_label, fw=500, span=True), x_axis_value],
-                    dmc.Image(src=screenshot_url, alt='Standby list not found for this flight.'),
-                    f'/flight/{flight_hash}',
-                    {'display': 'block'},
-                    [None for _ in range(len(clicked_data))]
+                    flight_page_url,
+                    n_opens + 1,
+                    [None for _ in clicked_data]
                 )
 
-        return (
-            dmc.Title('No flight selected.', order=4),
-            'Hover over a data point to view the standby list for that flight.',
-            None,
-            '/',
-            {'display': 'none'},
-            [None for _ in range(len(clicked_data))]
-        )
+        return no_update, no_update, [None for _ in clicked_data]
 
     @app.callback(
         Output('download-data', 'data'),
