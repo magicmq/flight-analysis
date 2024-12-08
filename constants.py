@@ -34,6 +34,11 @@ COMPATIBLE_VARIABLES = {
             'date': False,
             'flight_no': False,
             'day_of_week_name': True
+        },
+        'box': {
+            'date': False,
+            'flight_no': False,
+            'day_of_week_name': True
         }
     },
     'day_of_week_name': {
@@ -53,6 +58,11 @@ COMPATIBLE_VARIABLES = {
             'day_of_week_name': False
         },
         'bar_means': {
+            'date': True,
+            'flight_no': True,
+            'day_of_week_name': False
+        },
+        'box': {
             'date': True,
             'flight_no': True,
             'day_of_week_name': False

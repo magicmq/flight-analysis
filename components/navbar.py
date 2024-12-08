@@ -16,7 +16,8 @@ def construct_graph_settings(loc):
                         {'label': 'Time Series', 'value': 'time_series'},
                         {'label': 'Scatter Plot', 'value': 'scatter'},
                         {'label': 'Bar Graph', 'value': 'bar'},
-                        {'label': 'Bar Graph (Mean Values)', 'value': 'bar_means'}
+                        {'label': 'Bar Graph (Mean Values)', 'value': 'bar_means'},
+                        {'label': 'Box Plot', 'value': 'box'}
                     ],
                     value='time_series',
                     w=200
@@ -39,6 +40,7 @@ def construct_graph_settings(loc):
                                 dmc.Text([dmc.Text('Scatter Plot: ', fw=700, span=True), 'A graph consisting of points.']),
                                 dmc.Text([dmc.Text('Bar Graph: ', fw=700, span=True), 'A graph consisting of vertical bars. Each bar corresponds to an x-axis value and the height of each bar corresponds to the y-axis value.']),
                                 dmc.Text([dmc.Text('Bar Graph (Mean Values): ', fw=700, span=True), 'A bar graph, except that the y-axis is the average of all available data points for each x-axis group.']),
+                                dmc.Text([dmc.Text('Box Plot: ', fw=700, span=True), 'A box plot with data points grouped according to the x-axis value.']),
                             ], gap='xs')
                         )
                     ],
@@ -79,7 +81,7 @@ def construct_graph_settings(loc):
                                 dmc.Divider(label=[dmc.Title('X-Axis Variable', size='lg', order=4, c='black')], labelPosition='left', color='black'),
                                 dmc.Text([dmc.Text('Date: ', fw=700, span=True), 'Arrange the data on the x-axis according to the date of the flight.']),
                                 dmc.Text([dmc.Text('Flight Number: ', fw=700, span=True), 'Arrange the data on the x-axis according to the flight number of the flight.']),
-                                dmc.Text([dmc.Text('Day of Week: ', fw=700, span=True), 'Arrange the data on the x-axis according to the day of the week. ', dmc.Text('NOTE:', fw=500, span=True), ' This x-axis value is only allowed when \'Data Grouping\' is set to \'Route/Flight Number\' and \'Graph Type\' is set to \'Bar Graph (Mean Values)\'.'])
+                                dmc.Text([dmc.Text('Day of Week: ', fw=700, span=True), 'Arrange the data on the x-axis according to the day of the week. ', dmc.Text('NOTE: ', fw=500, span=True), 'This x-axis value is only allowed when \'Data Grouping\' is set to \'Route/Flight Number\' and \'Graph Type\' is set to \'Bar Graph (Mean Values)\'.'])
                             ], gap='xs')
                         )
                     ],
@@ -207,7 +209,8 @@ def construct_graph_settings(loc):
                         dmc.PopoverDropdown(
                             dmc.Stack([
                                 dmc.Divider(label=[dmc.Title('Color', size='lg', order=4, c='black')], labelPosition='left', color='black'),
-                                dmc.Text('(Optional) Applies a color to each data point (or bar) on the graphs according to the selected value.')
+                                dmc.Text('(Optional) Applies a color to each data point (or bar) on the graphs according to the selected value.'),
+                                dmc.Text([dmc.Text('Note: ', fw=500, span=True), 'The color variable has no effect when the box plot graph type is selected.'])
                             ], gap='xs'))
                     ],
                     width=400,

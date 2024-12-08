@@ -81,10 +81,10 @@ def init_callbacks(app):
         index = 1 if navbar_opened else 0
         graph_type = graph_type_all[index]
 
-        if graph_type == 'bar_means':
+        if graph_type == 'bar_means' or graph_type == 'box':
             return (
                 'Disabled',
-                'Cannot view standby listings when showing mean values.',
+                'Cannot view standby listings with this graph type selected.',
                 None,
                 '/',
                 {'display': 'none'},
@@ -138,7 +138,7 @@ def init_callbacks(app):
         index = 1 if navbar_opened else 0
         graph_type = graph_type_all[index]
 
-        if graph_type == 'bar_means':
+        if graph_type == 'bar_means' or graph_type == 'box':
             return no_update, no_update, [None for _ in clicked_data]
 
         for points in clicked_data:

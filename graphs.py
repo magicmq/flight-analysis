@@ -169,6 +169,31 @@ def construct_bar_means(grouped_data, x_axis, y_axes, color):
 
     return fig
 
+def construct_box_plot(data, x_axis, y_axes):
+    fig = go.Figure()
+
+    data_sorted = data.sort_values(by=x_axis)
+
+    for y_axis in y_axes:
+        fig.add_trace(go.Box(
+            x=data_sorted[x_axis],
+            y=data_sorted[y_axis],
+            text=data_sorted[y_axis],
+            name=f'{get_label(y_axis)}',
+            boxmean=True
+        ))
+    
+    fig.update_layout(
+        title=', '.join([get_label(y_axis) for y_axis in y_axes]) + f' Grouped by {get_label(x_axis)}',
+        xaxis_title=f'{get_label(x_axis)}',
+        yaxis_title='Count',
+        height=600,
+        legend_orientation='h',
+        boxmode='group'
+    )
+
+    return fig
+
 def get_graph(data, group_by, graph_type, x_axis, y_axes, color):
     fig = None
     if graph_type == 'time_series':
@@ -179,6 +204,8 @@ def get_graph(data, group_by, graph_type, x_axis, y_axes, color):
         fig = construct_bar(data, group_by, x_axis, y_axes, color)
     elif graph_type == 'bar_means':
         fig = construct_bar_means(data, x_axis, y_axes, color)
+    elif graph_type == 'box':
+        fig = construct_box_plot(data, x_axis, y_axes)
 
     if fig is None:
         fig = go.Figure()
