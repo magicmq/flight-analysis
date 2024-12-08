@@ -31,6 +31,7 @@ def layout(hash=None, **kwargs):
 def construct_main(data):
     return dmc.AppShellMain(dmc.Box(
         [
+            dmc.Title(f'{data.iloc[0]["route"]} On {data.iloc[0]["date"].strftime("%m/%d/%Y")}', order=2, mb=10),
             dmc.Accordion(
                 [
                     dmc.AccordionItem(
