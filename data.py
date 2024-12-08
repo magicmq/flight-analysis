@@ -58,13 +58,17 @@ def transform_data(data):
     @cache.memoize()
     def _transform_data(_data):
         _data['flight_no'] = _data['flight_no'].str.lstrip('0')
+        flight_no_order = ['7', '143', '32', '39', '837', '875', '881', '803', '131']
+        _data['flight_no'] = pd.Categorical(_data['flight_no'], categories=flight_no_order, ordered=True)
 
         _data['date'] = pd.to_datetime(_data['date'])
 
         _data['route'] = _data.apply(lambda row: f'UAL{row["flight_no"]} ({row["origin"]}-{row["destination"]})', axis=1)
+        route_order = ['UAL7 (IAH-NRT)', 'UAL143 (DEN-NRT)', 'UAL32 (LAX-NRT)', 'UAL39 (LAX-HND)', 'UAL837 (SFO-NRT)', 'UAL875 (SFO-HND)', 'UAL881 (ORD-HND)', 'UAL803 (IAD-HND)', 'UAL131 (EWR-HND)']
+        _data['route'] = pd.Categorical(_data['route'], categories=route_order, ordered=True)
 
-        day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         _data['day_of_week_name'] = _data['day_of_week'].map({i: day for i, day in enumerate(calendar.day_name)})
+        day_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         _data['day_of_week_name'] = pd.Categorical(_data['day_of_week_name'], categories=day_order, ordered=True)
 
         _data['flight_time'] = _data['flight_time'].str.replace('a', 'AM').str.replace('p', 'PM')

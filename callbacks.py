@@ -20,7 +20,7 @@ def init_callbacks(app):
         index = 1 if navbar_opened else 0
         selected_group = selected_group_all[index]
 
-        unique_items = get_data()[selected_group].unique()
+        unique_items = get_data()[selected_group].cat.categories
 
         accordion_items = []
         active_items = []

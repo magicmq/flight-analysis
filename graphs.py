@@ -193,7 +193,7 @@ def get_graphs(group_by, graph_type, x_axis, y_axes, color):
 
     figs = []
     
-    for group in data[group_by].unique():
+    for group in data[group_by].cat.categories:
         grouped_data = data[data[group_by] == group]
         figs.append(get_graph(grouped_data, group_by, graph_type, x_axis, y_axes, color))
     
