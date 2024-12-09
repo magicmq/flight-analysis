@@ -10,16 +10,98 @@ from constants import COMPATIBLE_VARIABLES, FLIGHT_PAGE_URL, SCREENSHOT_URL
 
 def init_callbacks(app):
     @app.callback(
+        Output('group-by-store', 'data'),
+        Output('graph-type-store', 'data'),
+        Output('x-axis-store', 'data'),
+        Output('y-axis-store', 'data'),
+        Output('color-store', 'data'),
+        State('group-by-store', 'data'),
+        State('graph-type-store', 'data'),
+        State('x-axis-store', 'data'),
+        State('y-axis-store', 'data'),
+        State('color-store', 'data'),
+        Input({'location': ALL, 'selector': 'group-by-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'x-axis-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'y-axis-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'color-selector'}, 'value'),
+        prevent_initial_call=True
+    )
+    def set_input_stores_navbar(group_by_current, graph_type_current, x_axis_current, y_axes_current, color_current, *args):
+        args_grouping = callback_context.args_grouping
+        inputs_only = [item for item in args_grouping if isinstance(item, list)]
+        triggered_item = next(d for group in inputs_only for d in group if d['triggered'])
+        selector = triggered_item['id']['selector']
+        value = triggered_item['value']
+
+        if selector == 'group-by-selector':
+            if group_by_current != value:
+                return value, no_update, no_update, no_update, no_update
+        elif selector == 'graph-type-selector':
+            if graph_type_current != value:
+                return no_update, value, no_update, no_update, no_update
+        elif selector == 'x-axis-selector':
+            if x_axis_current != value:
+                return no_update, no_update, value, no_update, no_update
+        elif selector == 'y-axis-selector':
+            if y_axes_current != value:
+                return no_update, no_update, no_update, value, no_update
+        else:
+            if color_current != value:
+                return no_update, no_update, no_update, no_update, value
+        
+        return no_update, no_update, no_update, no_update, no_update
+    
+    @app.callback(
+        Output({'location': ALL, 'selector': 'group-by-selector'}, 'value'),
+        Output({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
+        Output({'location': ALL, 'selector': 'x-axis-selector'}, 'value'),
+        Output({'location': ALL, 'selector': 'y-axis-selector'}, 'value'),
+        Output({'location': ALL, 'selector': 'color-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'group-by-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'x-axis-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'y-axis-selector'}, 'value'),
+        Input({'location': ALL, 'selector': 'color-selector'}, 'value'),
+        prevent_initial_call=True
+    )
+    def sync_inputs(*args):
+        args_grouping = callback_context.args_grouping
+        triggered_item = next(d for group in args_grouping for d in group if d['triggered'])
+        triggered_loc = triggered_item['id']['location']
+        selector = triggered_item['id']['selector']
+        value = triggered_item['value']
+
+        if triggered_loc == 'drawer':
+            if selector == 'group-by-selector':
+                return [value, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update]
+            elif selector == 'graph-type-selector':
+                return [no_update, no_update], [value, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update]
+            elif selector == 'x-axis-selector':
+                return [no_update, no_update], [no_update, no_update], [value, no_update], [no_update, no_update], [no_update, no_update]
+            elif selector == 'y-axis-selector':
+                return [no_update, no_update], [no_update, no_update], [no_update, no_update], [value, no_update], [no_update, no_update]
+            else:
+                return [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update], [value, no_update]
+        else:
+            if selector == 'group-by-selector':
+                return [no_update, value], [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update]
+            elif selector == 'graph-type-selector':
+                return [no_update, no_update], [no_update, value], [no_update, no_update], [no_update, no_update], [no_update, no_update]
+            elif selector == 'x-axis-selector':
+                return [no_update, no_update], [no_update, no_update], [no_update, value], [no_update, no_update], [no_update, no_update]
+            elif selector == 'y-axis-selector':
+                return [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, value], [no_update, no_update]
+            else:
+                return [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, no_update], [no_update, value]
+
+    @app.callback(
         Output('group-by-state', 'data'),
         Output('graphs-accordion-container', 'children'),
         Output('graphs-accordion-container', 'value'),
-        Input({'location': ALL, 'selector': 'group-by-selector'}, 'value'),
-        State('navbar-drawer', 'opened')
+        Input('group-by-store', 'data')
     )
-    def update_accordion_items(selected_group_all, navbar_opened):
-        index = 1 if navbar_opened else 0
-        selected_group = selected_group_all[index]
-
+    def update_accordion_items(selected_group):
         unique_items = get_data()[selected_group].cat.categories
 
         accordion_items = []
@@ -41,19 +123,12 @@ def init_callbacks(app):
     @app.callback(
         Output({'graph-group': ALL}, 'figure'),
         Input('group-by-state', 'data'),
-        Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
-        Input({'location': ALL, 'selector': 'x-axis-selector'}, 'value'),
-        Input({'location': ALL, 'selector': 'y-axis-selector'}, 'value'),
-        Input({'location': ALL, 'selector': 'color-selector'}, 'value'),
-        State('navbar-drawer', 'opened')
+        Input('graph-type-store', 'data'),
+        Input('x-axis-store', 'data'),
+        Input('y-axis-store', 'data'),
+        Input('color-store', 'data')
     )
-    def update_graphs(group_by, graph_type_all, x_axis_all, y_axes_all, color_all, navbar_opened):
-        index = 1 if navbar_opened else 0
-        graph_type = graph_type_all[index]
-        x_axis = x_axis_all[index]
-        y_axes = y_axes_all[index]
-        color = color_all[index]
-
+    def update_graphs(group_by, graph_type, x_axis, y_axes, color):
         if not COMPATIBLE_VARIABLES[group_by][graph_type][x_axis]:
             set_props('notifications-container', {'children': construct_error(
                 id=f'error-{group_by}-{graph_type}-{x_axis}-{y_axes}',
@@ -73,14 +148,10 @@ def init_callbacks(app):
         Output('selected-flight-navbar-external', 'style'),
         Output({'graph-group': ALL}, 'hoverData'),
         Input({'graph-group': ALL}, 'hoverData'),
-        Input({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
-        State('navbar-drawer', 'opened'),
+        Input('graph-type-store', 'data'),
         prevent_initial_call=True
     )
-    def display_hovered_flight(hover_data, graph_type_all, navbar_opened):
-        index = 1 if navbar_opened else 0
-        graph_type = graph_type_all[index]
-
+    def display_hovered_flight(hover_data, graph_type):
         if graph_type == 'bar_means' or graph_type == 'box':
             return (
                 'Disabled',
@@ -130,14 +201,10 @@ def init_callbacks(app):
         Output({'graph-group': ALL}, 'clickData'),
         Input('new-tab-handler', 'n_opens'),
         Input({'graph-group': ALL}, 'clickData'),
-        State({'location': ALL, 'selector': 'graph-type-selector'}, 'value'),
-        State('navbar-drawer', 'opened'),
+        State('graph-type-store', 'data'),
         prevent_initial_call=True
     )
-    def open_clicked_flight(n_opens, clicked_data, graph_type_all, navbar_opened):
-        index = 1 if navbar_opened else 0
-        graph_type = graph_type_all[index]
-
+    def open_clicked_flight(n_opens, clicked_data, graph_type):
         if graph_type == 'bar_means' or graph_type == 'box':
             return no_update, no_update, [None for _ in clicked_data]
 
