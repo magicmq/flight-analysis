@@ -60,7 +60,7 @@ def construct_scatter(data, group_column, x_axis, y_axes, color, mode='markers')
     return fig
 
 def construct_time_series(data, group_column, x_axis, y_axes, color):
-    return construct_scatter(data, group_column, x_axis, y_axes, color, mode='lines+markers')
+    return construct_scatter(data, group_column, x_axis, y_axes, color, mode='lines')
 
 def construct_bar(data, group_column, x_axis, y_axes, color):
     fig = go.Figure()
