@@ -64,7 +64,7 @@ def transform_data(data):
         _data['date'] = pd.to_datetime(_data['date'])
 
         _data['route'] = _data.apply(lambda row: f'UAL{row["flight_no"]} ({row["origin"]}-{row["destination"]})', axis=1)
-        route_order = ['UAL7 (IAH-NRT)', 'UAL143 (DEN-NRT)', 'UAL32 (LAX-NRT)', 'UAL39 (LAX-HND)', 'UAL837 (SFO-NRT)', 'UAL875 (SFO-HND)', 'UAL881 (ORD-HND)', 'UAL803 (IAD-HND)', 'UAL131 (EWR-HND)']
+        route_order = ['UAL7 (IAH-NRT)', 'UAL143 (DEN-NRT)', 'UAL32 (LAX-NRT)', 'UAL39 (LAX-HND)', 'UAL837 (SFO-NRT)', 'UAL875 (SFO-HND)', 'UAL881 (ORD-HND)', 'UAL803 (IAD-HND)', 'UAL131 (EWR-HND)', 'UAL79 (EWR-NRT)']
         _data['route'] = pd.Categorical(_data['route'], categories=route_order, ordered=True)
 
         _data['day_of_week_name'] = _data['day_of_week'].map({i: day for i, day in enumerate(calendar.day_name)})
