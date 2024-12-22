@@ -48,9 +48,9 @@ def construct_group_summary_route(grouped_data):
                 dmc.Card(
                     [
                         dmc.Title('By Date', order=4),
-                        dmc.Text([dmc.Text('Available Dates:', fw=500, span=True), f' {grouped_data['date'].dt.strftime('%m/%d/%Y').tolist()}']),
+                        dmc.Text([dmc.Text('Available Dates:', fw=500, span=True), f' {grouped_data["date"].dt.strftime("%m/%d/%Y").tolist()}']),
                         dmc.Text([dmc.Text('Number of Missing Dates:', fw=500, span=True), f' {len(missing_dates)}']),
-                        dmc.Text([dmc.Text('Missing Dates:', fw=500, span=True), f' {missing_dates.strftime('%m/%d/%Y').tolist()}'])
+                        dmc.Text([dmc.Text('Missing Dates:', fw=500, span=True), f' {missing_dates.strftime("%m/%d/%Y").tolist()}'])
                     ],
                     withBorder=True
                 ),
@@ -88,9 +88,9 @@ def construct_group_summary_dow(grouped_data):
                 dmc.Card(
                     [
                         dmc.Title('By Date*', order=4),
-                        dmc.Text([dmc.Text('Available Dates:', fw=500, span=True), f' {grouped_data['date'].dt.strftime('%m/%d/%Y').tolist()}']),
+                        dmc.Text([dmc.Text('Available Dates:', fw=500, span=True), f' {grouped_data["date"].dt.strftime("%m/%d/%Y").tolist()}']),
                         dmc.Text([dmc.Text('Number of Missing Dates:', fw=500, span=True), f' {len(missing_dates)}']),
-                        dmc.Text([dmc.Text('Missing Dates:', fw=500, span=True), f' {missing_dates.strftime('%m/%d/%Y').tolist()}'], mb=5),
+                        dmc.Text([dmc.Text('Missing Dates:', fw=500, span=True), f' {missing_dates.strftime("%m/%d/%Y").tolist()}'], mb=5),
                         dmc.Text('* Includes all flight numbers, so duplicate dates are possible.', fs='italic')
                     ],
                     withBorder=True
@@ -98,17 +98,17 @@ def construct_group_summary_dow(grouped_data):
                 dmc.Card(
                     [
                         dmc.Title('By Flight Number', order=4),
-                        dmc.Text([dmc.Text('Available Data Points for UAL7:', fw=500, span=True), f' {flight_no_counts.get('7', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL143:', fw=500, span=True), f' {flight_no_counts.get('143', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL32:', fw=500, span=True), f' {flight_no_counts.get('32', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL39:', fw=500, span=True), f' {flight_no_counts.get('39', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL837:', fw=500, span=True), f' {flight_no_counts.get('837', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL875:', fw=500, span=True), f' {flight_no_counts.get('875', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL881:', fw=500, span=True), f' {flight_no_counts.get('881', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL803:', fw=500, span=True), f' {flight_no_counts.get('803', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL131:', fw=500, span=True), f' {flight_no_counts.get('131', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL79:', fw=500, span=True), f' {flight_no_counts.get('79', 0)}']),
-                        dmc.Text([dmc.Text('Available Data Points for UAL35:', fw=500, span=True), f' {flight_no_counts.get('35', 0)}'])
+                        dmc.Text([dmc.Text('Available Data Points for UAL7:', fw=500, span=True), f' {flight_no_counts.get("7", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL143:', fw=500, span=True), f' {flight_no_counts.get("143", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL32:', fw=500, span=True), f' {flight_no_counts.get("32", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL39:', fw=500, span=True), f' {flight_no_counts.get("39", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL837:', fw=500, span=True), f' {flight_no_counts.get("837", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL875:', fw=500, span=True), f' {flight_no_counts.get("875", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL881:', fw=500, span=True), f' {flight_no_counts.get("881", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL803:', fw=500, span=True), f' {flight_no_counts.get("803", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL131:', fw=500, span=True), f' {flight_no_counts.get("131", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL79:', fw=500, span=True), f' {flight_no_counts.get("79", 0)}']),
+                        dmc.Text([dmc.Text('Available Data Points for UAL35:', fw=500, span=True), f' {flight_no_counts.get("35", 0)}'])
                     ],
                     withBorder=True
                 ),
