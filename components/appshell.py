@@ -1,5 +1,5 @@
-from components.header import construct_header
-from components.navbar import construct_navbar, construct_navbar_drawer
+from components.rootheader import construct_header
+from components.rootnavbar import construct_navbar, construct_navbar_drawer
 from components.main import construct_main
 
 import dash_mantine_components as dmc

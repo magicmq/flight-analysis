@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 
 from data import get_data, get_data_as
 from graphs import get_graphs
-from components.misc import construct_error, construct_graph_container
+from components.misc import construct_error, construct_graph_container, construct_group_summary
 
 from columns import get_label
 from constants import COMPATIBLE_VARIABLES, FLIGHT_PAGE_URL, SCREENSHOT_URL
@@ -242,3 +242,42 @@ def init_callbacks(app):
             return dcc.send_data_frame(get_data_as('excel'), 'data.xlsx', sheet_name='Sheet1')
         elif triggered_id == 'download-json':
             return dcc.send_data_frame(get_data_as('json'), 'data.json')
+        
+    @app.callback(
+        Output('group-by-summary-state', 'data'),
+        Output('group-by-summary-container', 'children'),
+        Output('group-by-summary-container', 'value'),
+        Input('group-by-summary-selector', 'value')
+    )
+    def update_data_summary(selected_group):
+        unique_items = get_data()[selected_group].cat.categories
+
+        accordion_items = []
+        active_items = []
+        for item in unique_items:
+            item_id = item.lower().replace(' ', '_')
+            accordion_items.append(
+                dmc.AccordionItem([
+                        dmc.AccordionControl(dmc.Title(item, order=4)),
+                        dmc.AccordionPanel(dmc.Box(id={'group-summary': item})),
+                    ],
+                    value=item_id
+                )
+            )
+            active_items.append(item_id)
+        
+        return selected_group, accordion_items, active_items
+    
+    @app.callback(
+        Output({'group-summary': ALL}, 'children'),
+        Input('group-by-summary-state', 'data'),
+    )
+    def update_data_summary_containers(group):
+        containers = []
+
+        grouped_data = get_data().groupby(group, observed=False)
+
+        for _, grouped_data in grouped_data:
+            containers.append(construct_group_summary(group, grouped_data))
+
+        return containers

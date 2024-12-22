@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 from datetime import datetime
 import pytz
 
-from components.flightheader import construct_header
+from components.genericheader import construct_header
 from data import get_data
 
 from columns import get_columns_by_category
@@ -19,7 +19,7 @@ def layout(hash=None, **kwargs):
     data = get_data(hash)
     return dmc.AppShell(
         children = [
-            construct_header(),
+            construct_header('Flight Info'),
             construct_main(data)
         ],
         header={

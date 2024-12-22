@@ -1,6 +1,6 @@
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-from dash import clientside_callback, Output, Input
+from dash import dcc, clientside_callback, Output, Input
 
 def construct_header():
     return dmc.AppShellHeader(
@@ -16,6 +16,26 @@ def construct_header():
                             dmc.GridCol(
                                 dmc.Group(
                                     [
+                                        dmc.Tooltip(
+                                            children=[
+                                                dcc.Link(
+                                                    [
+                                                        dmc.ActionIcon(
+                                                            DashIconify(icon='mdi:book-open-blank-variant', width=25),
+                                                            variant='transparent',
+                                                            size='xl',
+                                                            color='gray',
+                                                            visibleFrom='sm'
+                                                        )
+                                                    ],
+                                                    href='/summary'
+                                                )
+                                            ],
+                                            label='View Data Summary',
+                                            position='bottom',
+                                            offset=3,
+                                            withArrow=True
+                                        ),
                                         dmc.Menu(
                                             children=[
                                                 dmc.MenuTarget(
