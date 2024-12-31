@@ -6,7 +6,7 @@ import pytz
 from components.genericheader import construct_header
 from data import get_data
 
-from columns import get_columns_by_category
+from columns import COLUMNS, get_columns_by_category
 from constants import SCREENSHOT_URL
 
 def title(hash=None, **kwargs):
@@ -154,7 +154,9 @@ def construct_flight_info(data):
                     dmc.Text([dmc.Text('Would a passrider with SA3V priority have gotten on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['net_pos_va'], 0, '>=')]),
                     dmc.Text([dmc.Text('Would a passrider with SA4P priority have gotten on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['net_pos_pe'], 0, '>=')]),
                     dmc.Text([dmc.Text('Would a passrider with SA3V priority have gotten a polaris seat on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['p_net_pos_va_bu'], 0, '>=')]),
-                    dmc.Text([dmc.Text('Would a passrider with SA4P priority have gotten a polaris seat on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['p_net_pos_pe_bu'], 0, '>=')])
+                    dmc.Text([dmc.Text('Would a passrider with SA4P priority have gotten a polaris seat on this flight? ', fw=500, span=True), get_what_if(data.iloc[0]['p_net_pos_pe_bu'], 0, '>=')]),
+                    dmc.Title('Data Rundown', order=4, mt=10),
+                    construct_data_rundown(data)
                 ],
                 withBorder=True
             ),
@@ -169,6 +171,87 @@ def construct_flight_info(data):
         cols={'base': 1, 'lg': 2},
         spacing='md',
         verticalSpacing='md'
+    )
+
+def construct_data_rundown(data):
+    rows = [
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['av_to']['label']),
+                dmc.TableTd(data.iloc[0]['av_to'])
+            ]
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['av_bu']['label']),
+                dmc.TableTd(data.iloc[0]['av_bu'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['he_to']['label']),
+                dmc.TableTd(data.iloc[0]['he_to'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['pos_pe']['label']),
+                dmc.TableTd(data.iloc[0]['pos_pe'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['pos_va']['label']),
+                dmc.TableTd(data.iloc[0]['pos_va'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['p_net_pos_pe_bu']['label']),
+                dmc.TableTd(data.iloc[0]['p_net_pos_pe_bu'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['p_net_pos_va_bu']['label']),
+                dmc.TableTd(data.iloc[0]['p_net_pos_va_bu'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['p_cl_sa_bu']['label']),
+                dmc.TableTd(data.iloc[0]['p_cl_sa_bu'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['p_cl_sa_pp']['label']),
+                dmc.TableTd(data.iloc[0]['p_cl_sa_pp'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd(COLUMNS['p_cl_sa_co']['label']),
+                dmc.TableTd(data.iloc[0]['p_cl_sa_co'])
+            ],
+        ),
+        dmc.TableTr(
+            [
+                dmc.TableTd('Standbys Not Cleared'),
+                dmc.TableTd(data.iloc[0]['p_sy_sa_co'])
+            ],
+        ),
+    ]
+
+    body = dmc.TableTbody(rows)
+
+    return dmc.Table(
+        [body],
+        striped=True,
+        highlightOnHover=True,
+        withTableBorder=False,
+        withColumnBorders=False,
+        horizontalSpacing=10
     )
 
 def construct_standby_data_tables(data):
