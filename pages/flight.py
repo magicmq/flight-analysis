@@ -238,7 +238,7 @@ def construct_data_rundown(data):
         dmc.TableTr(
             [
                 dmc.TableTd('Standbys Not Cleared'),
-                dmc.TableTd(data.iloc[0]['p_sy_sa_co'])
+                dmc.TableTd(data.iloc[0]['p_sy_sa_co_net'])
             ],
         ),
     ]

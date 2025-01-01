@@ -979,7 +979,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_to_to': {
+    'p_sy_to_to_net': {
         'category': 'standby',
         'sub_category': 'total',
         'label': 'Total Not Cleared',
@@ -988,6 +988,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+        'p_sy_to_to_nci': {
+        'category': 'standby',
+        'sub_category': 'total',
+        'label': 'Total Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_ug_to': {
@@ -1001,7 +1012,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_ug_to': {
+    'p_sy_ug_to_net': {
         'category': 'standby',
         'sub_category': 'total',
         'label': 'Total Upgrades Not Cleared',
@@ -1010,6 +1021,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_ug_to_nci': {
+        'category': 'standby',
+        'sub_category': 'total',
+        'label': 'Total Upgrades Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_sa_to': {
@@ -1023,7 +1045,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_sa_to': {
+    'p_sy_sa_to_net': {
         'category': 'standby',
         'sub_category': 'total',
         'label': 'Total Standbys Not Cleared',
@@ -1032,6 +1054,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_sa_to_nci': {
+        'category': 'standby',
+        'sub_category': 'total',
+        'label': 'Total Standbys Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_to_bu': {
@@ -1045,7 +1078,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_to_bu': {
+    'p_sy_to_bu_net': {
         'category': 'standby',
         'sub_category': 'polaris',
         'label': 'Polaris Total Not Cleared',
@@ -1054,6 +1087,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_to_bu_nci': {
+        'category': 'standby',
+        'sub_category': 'polaris',
+        'label': 'Polaris Total Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_ug_bu': {
@@ -1067,7 +1111,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_ug_bu': {
+    'p_sy_ug_bu_net': {
         'category': 'standby',
         'sub_category': 'polaris',
         'label': 'Polaris Upgrades Not Cleared',
@@ -1076,6 +1120,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_ug_bu_nci': {
+        'category': 'standby',
+        'sub_category': 'polaris',
+        'label': 'Polaris Upgrades Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_sa_bu': {
@@ -1089,7 +1144,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_sa_bu': {
+    'p_sy_sa_bu_net': {
         'category': 'standby',
         'sub_category': 'polaris',
         'label': 'Polaris Standbys Not Cleared',
@@ -1098,6 +1153,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_sa_bu_nci': {
+        'category': 'standby',
+        'sub_category': 'polaris',
+        'label': 'Polaris Standbys Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_to_pp': {
@@ -1111,7 +1177,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_to_pp': {
+    'p_sy_to_pp_net': {
         'category': 'standby',
         'sub_category': 'premium_plus',
         'label': 'Premium Plus Total Not Cleared',
@@ -1120,6 +1186,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_to_pp_nci': {
+        'category': 'standby',
+        'sub_category': 'premium_plus',
+        'label': 'Premium Plus Total Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_ug_pp': {
@@ -1133,7 +1210,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_ug_pp': {
+    'p_sy_ug_pp_net': {
         'category': 'standby',
         'sub_category': 'premium_plus',
         'label': 'Premium Plus Upgrades Not Cleared',
@@ -1142,6 +1219,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_ug_pp_nci': {
+        'category': 'standby',
+        'sub_category': 'premium_plus',
+        'label': 'Premium Plus Upgrades Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_sa_pp': {
@@ -1155,7 +1243,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_sa_pp': {
+    'p_sy_sa_pp_net': {
         'category': 'standby',
         'sub_category': 'premium_plus',
         'label': 'Premium Plus Standbys Not Cleared',
@@ -1164,6 +1252,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_sa_pp_nci': {
+        'category': 'standby',
+        'sub_category': 'premium_plus',
+        'label': 'Premium Plus Standbys Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_to_co': {
@@ -1177,7 +1276,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_to_co': {
+    'p_sy_to_co_net': {
         'category': 'standby',
         'sub_category': 'economy',
         'label': 'Economy Total Not Cleared',
@@ -1186,6 +1285,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_to_co_nci': {
+        'category': 'standby',
+        'sub_category': 'economy',
+        'label': 'Economy Total Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_ug_co': {
@@ -1199,7 +1309,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_ug_co': {
+    'p_sy_ug_co_net': {
         'category': 'standby',
         'sub_category': 'economy',
         'label': 'Economy Upgrades Not Cleared',
@@ -1208,6 +1318,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_ug_co_nci': {
+        'category': 'standby',
+        'sub_category': 'economy',
+        'label': 'Economy Upgrades Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
     'p_cl_sa_co': {
@@ -1221,7 +1342,7 @@ COLUMNS = {
             'scale': 'RdYlGn',
         }
     },
-    'p_sy_sa_co': {
+    'p_sy_sa_co_net': {
         'category': 'standby',
         'sub_category': 'economy',
         'label': 'Economy Standbys Not Cleared',
@@ -1230,6 +1351,17 @@ COLUMNS = {
         'color': True,
         'color_info': {
             'scale': 'RdYlGn_r',
+        }
+    },
+    'p_sy_sa_co_nci': {
+        'category': 'standby',
+        'sub_category': 'economy',
+        'label': 'Economy Standbys Not Checked In',
+        'x_axis': False,
+        'y_axis': True,
+        'color': True,
+        'color_info': {
+            'scale': 'RdYlGn',
         }
     },
 }
