@@ -34,7 +34,8 @@ def construct_header():
                                             label='View Data Summary',
                                             position='bottom',
                                             offset=3,
-                                            withArrow=True
+                                            withArrow=True,
+                                            visibleFrom='sm'
                                         ),
                                         dmc.Menu(
                                             children=[
