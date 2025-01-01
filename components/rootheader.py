@@ -11,7 +11,8 @@ def construct_header():
                         children=[
                             dmc.GridCol(
                                 dmc.Title('Flight Data Analysis', order=1),
-                                span='content'
+                                span='content',
+                                px=0
                             ),
                             dmc.GridCol(
                                 dmc.Group(
@@ -118,7 +119,8 @@ def construct_header():
                                     justify='flex-end',
                                     gap='sm'
                                 ),
-                                span='auto'
+                                span='auto',
+                                px=0
                             )
                         ],
                         justify='space-between'
