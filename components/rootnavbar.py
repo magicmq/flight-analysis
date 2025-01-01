@@ -270,5 +270,6 @@ def construct_navbar_drawer():
         construct_navbar_content('drawer'),
         id='navbar-drawer',
         size=350,
+        title=dmc.Title('Graph Settings', order=2),
         trapFocus=False
     )
