@@ -220,7 +220,7 @@ def construct_data_rundown(data):
         dmc.TableTr(
             [
                 dmc.TableTd(COLUMNS['p_cl_sa_to']['label']),
-                dmc.TableTd(data.iloc[0]['p_cl_to_to'])
+                dmc.TableTd(data.iloc[0]['p_cl_sa_to'])
             ],
         ),
         dmc.TableTr(
